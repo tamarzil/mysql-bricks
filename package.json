@@ -1,0 +1,25 @@
+{
+  "name": "mysql-bricks",
+  "version": "1.0.0",
+  "description": "sql-bricks extension for MySQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mysql",
+    "node",
+    "nodejs",
+    "sql-bricks",
+    "query"
+  ],
+  "author": "Tamar Zilbar",
+  "license": "MIT",
+  "dependencies": {
+    "sql-bricks": "^2.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}
