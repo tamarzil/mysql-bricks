@@ -15,6 +15,10 @@
   ],
   "author": "Tamar Zilbar",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tamarzil/mysql-bricks.git"
+  },
   "dependencies": {
     "sql-bricks": "^2.0.3"
   },
