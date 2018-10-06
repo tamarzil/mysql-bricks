@@ -4,7 +4,7 @@ sql-bricks extension for MySQL
 mysql-bricks is an extension to the awesome [sql-bricks library], that helps generate SQL statements for MySQL DB. It adds MySQL specific functions and formatting on top of the sql-bricks functionality.
 
 
-## Installation - This code will be added as an npm package shortly! 
+## Installation
 
 Requires Node.js V6+ and ECMAScript 6 to run
 
