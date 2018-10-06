@@ -1,6 +1,6 @@
 {
   "name": "mysql-bricks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "sql-bricks extension for MySQL",
   "main": "index.js",
   "scripts": {
