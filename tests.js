@@ -90,6 +90,21 @@ describe("MySQL Query Builder Tests", function () {
             return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
         });
 
+        it("should return correct insert query when using 'ignore'", function () {
+
+            let values = [[123, 'Moshe', 41, 92], [456, 'David', 34, 87], [789, 'Rachel', 22, 98]];
+
+            let expectedQuery = 'INSERT IGNORE INTO main.some_table (id, name, age, grade) ' +
+                'VALUES (123, \'Moshe\', 41, 92),  (456, \'David\', 34, 87), (789, \'Rachel\', 22, 98)';
+
+            let actualQuery = sql.insert('main.some_table', 'id', 'name', 'age', 'grade')
+                .ignore()
+                .values(values)
+                .toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
         it("should quote reserved words with grave accent (backtick)", function () {
 
             let values = [[123, 'Moshe', 41, 92], [456, 'David', 34, 87], [789, 'Rachel', 22, 98]];

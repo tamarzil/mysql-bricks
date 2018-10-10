@@ -51,4 +51,15 @@ mysqlBricks.insert.defineClause('onDuplicateKeyUpdate',
     {after: 'values'}
 );
 
+// IGNORE
+mysqlBricks.insert.prototype.ignore = function() {
+    this._insertIgnore = true;
+    return this;
+};
+
+mysqlBricks.insert.defineClause('ignore', '{{#if _insertIgnore}}IGNORE{{/if}}', { after: 'insert' });
+
+// TODO: Replace
+
+
 module.exports = mysqlBricks;
