@@ -158,4 +158,87 @@ describe("MySQL Query Builder Tests", function () {
             return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
         });
     });
+
+    describe("delete", function() {
+
+        it("should return correct delete query with limit", function () {
+
+            let expectedQuery = 'DELETE FROM main.some_table LIMIT 100';
+
+            let actualQuery = sql.delete('main.some_table').limit(100).toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
+        it("should return correct delete query with where and limit", function () {
+
+            let expectedQuery = 'DELETE FROM main.some_table WHERE id > 200 LIMIT 100';
+
+            let actualQuery = sql.delete('main.some_table').where(sql.gt('id', 200)).limit(100).toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
+        it("should return correct delete query with order by when passing columns as array", function () {
+
+            let expectedQuery = 'DELETE FROM main.some_table ORDER BY name,age desc,grade';
+
+            let actualQuery = sql.delete('main.some_table').orderBy(['name', 'age desc', 'grade']).toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
+        it("should return correct delete query with order by when passing columns as separate arguments", function () {
+
+            let expectedQuery = 'DELETE FROM main.some_table ORDER BY name, age desc, grade';
+
+            let actualQuery = sql.delete('main.some_table').orderBy('name', 'age desc', 'grade').toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
+        it("should return correct delete query without order by when passing null", function () {
+
+            let expectedQuery = 'DELETE FROM main.some_table';
+
+            let actualQuery = sql.delete('main.some_table').orderBy().toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
+        it("should return correct delete query without order by when passing empty array", function () {
+
+            let expectedQuery = 'DELETE FROM main.some_table';
+
+            let actualQuery = sql.delete('main.some_table').orderBy([]).toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
+        it("should return correct delete query without order by when passing empty string", function () {
+
+            let expectedQuery = 'DELETE FROM main.some_table';
+
+            let actualQuery = sql.delete('main.some_table').orderBy('').toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
+        it("should return correct delete query with order by and limit", function () {
+
+            let expectedQuery = 'DELETE FROM main.some_table ORDER BY name, age desc, grade LIMIT 100';
+
+            let actualQuery = sql.delete('main.some_table')
+                .orderBy('name', 'age desc', 'grade')
+                .limit(100)
+                .toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+    })
+
+    describe("update", function() {
+
+        
+    });
 });
