@@ -237,8 +237,47 @@ describe("MySQL Query Builder Tests", function () {
         });
     })
 
-    describe("update", function() {
+    describe("update", function() {     // not repeating similar tests for limit and order by in "delete" class
 
+        it("should return correct update query with limit clause", function () {
+
+            let expectedQuery = 'UPDATE main.some_table SET grade = 90 LIMIT 100';
+
+            let actualQuery = sql.update('main.some_table', { grade: 90}).limit(100).toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
+        it("should return correct update query with where, limit clauses", function () {
+
+            let expectedQuery = 'UPDATE main.some_table SET grade = 90 WHERE grade > 90 LIMIT 100';
+
+            let actualQuery = sql.update('main.some_table', { grade: 90}).where(sql.gt('grade', 90)).limit(100).toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
+        it("should return correct update query with order by clause", function () {
+
+            let expectedQuery = 'UPDATE main.some_table SET grade = 90 ORDER BY age desc';
+
+            let actualQuery = sql.update('main.some_table', { grade: 90}).orderBy('age desc').toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
+        it("should return correct update query with where, order by, limit clauses", function () {
+
+            let expectedQuery = 'UPDATE main.some_table SET grade = 90 WHERE grade > 90 ORDER BY age desc LIMIT 100';
+
+            let actualQuery = sql.update('main.some_table', { grade: 90})
+                .where(sql.gt('grade', 90))
+                .orderBy('age desc')
+                .limit(100)
+                .toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
         
     });
 });
