@@ -61,8 +61,15 @@ mysqlBricks.insert.defineClause('onDuplicateKeyUpdate',
             return;
         }
         return 'ON DUPLICATE KEY UPDATE ' + this._onDuplicateColumns.map(function(col) {
-            col = sql._handleColumn(col, null);
-            return `${col} = VALUES(${col})`;
+            if (col.constructor === "".constructor) { // is string
+                col = sql._handleColumn(col, null);
+                return `${col} = VALUES(${col})`;
+            } else if (col.constructor === {}.constructor && Object.keys(col).length > 0) { // is column-value pair object
+                let colKey = Object.keys(col)[0];
+                let colValue = col[colKey];
+                colKey = sql._handleColumn(colKey, null);
+                return `${colKey} = ${colValue}`;
+            }
         }).join(', ');
     },
     {after: 'values'}
@@ -75,11 +82,6 @@ mysqlBricks.insert.prototype.ignore = function() {
 };
 
 mysqlBricks.insert.defineClause('ignore', '{{#if _insertIgnore}}IGNORE{{/if}}', { after: 'insert' });
-
-
-// TODO: The ORDER BY and LIMIT clauses of the UPDATE and DELETE statements + tests
-// TODO: extend on duplicate key update - allow expression
-// Replace ?
 
 
 

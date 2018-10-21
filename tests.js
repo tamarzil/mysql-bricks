@@ -45,6 +45,22 @@ describe("MySQL Query Builder Tests", function () {
             return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
         });
 
+        it("should return correct insert query when using '.onDuplicateKeyUpdate' option with column-value pair", function () {
+
+            let values = [[123, 'Moshe', 41, 92, 0], [456, 'David', 34, 87, 0], [789, 'Rachel', 22, 98, 0]];
+
+            let expectedQuery = 'INSERT INTO main.some_table (id, name, age, grade, counter) ' +
+                'VALUES (123, \'Moshe\', 41, 92, 0),  (456, \'David\', 34, 87, 0), (789, \'Rachel\', 22, 98, 0) ' +
+                'ON DUPLICATE KEY UPDATE age = VALUES(age), grade = VALUES(grade), counter = counter + 1';
+
+            let actualQuery = sql.insert('main.some_table', 'id', 'name', 'age', 'grade', 'counter')
+                .values(values)
+                .onDuplicateKeyUpdate(['age', 'grade', { counter: 'counter + 1' }])
+                .toString();
+
+            return expect(actualQuery).to.equal(expectedQuery.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
+        });
+
         it("should ignore '.onDuplicateKeyUpdate' when cols is null", function () {
 
             let values = [[123, 'Moshe', 41, 92], [456, 'David', 34, 87], [789, 'Rachel', 22, 98]];

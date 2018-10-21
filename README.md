@@ -26,8 +26,23 @@ let query = sql.insert('main.some_table', 'id', 'name', 'age', 'grade')
                 .toString();
 /*                
 INSERT INTO main.some_table (id, name, age, grade)
-VALUES (123, \'Moshe\', 41, 92),  (456, \'David\', 34, 87), (789, \'Rachel\', 22, 98)
+VALUES (123, \'Daniel\', 41, 92),  (456, \'David\', 34, 87), (789, \'Rachel\', 22, 98)
 ON DUPLICATE KEY UPDATE grade = VALUES(grade)
+*/
+```
+ON DUPLICATE KEY UPDATE clause can also contain a column-value pair, where the value is a free text sql.  
+Note that free-text sql will not be automatically quoted if it contains reserved words.
+
+```javascript
+let values = [[123, 'Daniel', 41, 92, 0], [456, 'David', 34, 87, 0], [789, 'Rachel', 22, 98, 0]];  
+let query = sql.insert('main.some_table', 'id', 'name', 'age', 'grade', 'counter')
+                .values(values)
+                .onDuplicateKeyUpdate(['age', 'grade', { counter: 'counter + 1' }])
+                .toString();
+/*                
+INSERT INTO main.some_table (id, name, age, grade, counter)
+VALUES (123, \'Daniel\', 41, 92, 0),  (456, \'David\', 34, 87, 0), (789, \'Rachel\', 22, 98, 0)
+ON DUPLICATE KEY UPDATE age = VALUES(age), grade = VALUES(grade), counter = counter + 1
 */
 ```
 
@@ -41,7 +56,7 @@ let query = sql.insert('main.some_table', 'id', 'name', 'age', 'grade')
                 .toString();
 /*                
 INSERT IGNORE INTO main.some_table (id, name, age, grade)
-VALUES (123, \'Moshe\', 41, 92),  (456, \'David\', 34, 87), (789, \'Rachel\', 22, 98)
+VALUES (123, \'Daniel\', 41, 92),  (456, \'David\', 34, 87), (789, \'Rachel\', 22, 98)
 */
 ```
 
