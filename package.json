@@ -1,29 +1,29 @@
 {
-  "name": "mysql-bricks",
-  "version": "1.1.1",
-  "description": "sql-bricks extension for MySQL",
-  "main": "index.js",
-  "scripts": {
-    "test": "node_modules/mocha/bin/mocha tests.js"
-  },
-  "keywords": [
-    "mysql",
-    "node",
-    "nodejs",
-    "sql-bricks",
-    "query"
-  ],
-  "author": "Tamar Zilbar",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tamarzil/mysql-bricks.git"
-  },
-  "dependencies": {
-    "sql-bricks": "^2.0.3"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0"
-  }
+    "name": "mysql-bricks",
+    "version": "1.1.1",
+    "description": "sql-bricks extension for MySQL",
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha tests.js"
+    },
+    "keywords": [
+        "mysql",
+        "node",
+        "nodejs",
+        "sql-bricks",
+        "query"
+    ],
+    "author": "Tamar Zilbar",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tamarzil/mysql-bricks.git"
+    },
+    "dependencies": {
+        "sql-bricks": "^3.0.0"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "mocha": "^10.0.0"
+    }
 }

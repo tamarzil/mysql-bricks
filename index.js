@@ -32,10 +32,16 @@ mysqlBricks.select.prototype.limit = mysqlBricks.delete.prototype.limit = mysqlB
     return this;
 };
 
-let limitClause = '{{#ifNotNull _limit}}LIMIT {{_limit}}{{/ifNotNull}}';
-mysqlBricks.select.defineClause('limit', limitClause, { after: 'orderBy' });
-mysqlBricks.update.defineClause('limit', limitClause, { after: 'orderBy' });
-mysqlBricks.delete.defineClause('limit', limitClause, { after: 'orderBy' });
+const limitClauseFunction = function() {
+    if(this._limit) {
+        return `LIMIT ${this._limit}`
+    }
+}
+
+// '{{#ifNotNull _limit}}LIMIT {{_limit}}{{/ifNotNull}}';
+mysqlBricks.select.defineClause('limit', limitClauseFunction, { after: 'orderBy' });
+mysqlBricks.update.defineClause('limit', limitClauseFunction, { after: 'orderBy' });
+mysqlBricks.delete.defineClause('limit', limitClauseFunction, { after: 'orderBy' });
 
 // SELECT ... OFFSET
 mysqlBricks.select.prototype.offset = function(val) {
@@ -43,9 +49,16 @@ mysqlBricks.select.prototype.offset = function(val) {
     return this;
 };
 
+const offsetClauseFunction = function() {
+    if(this._offset) {
+        return `OFFSET ${this._offset}`
+    }
+}
+
+// '{{#ifNotNull _offset}}OFFSET {{_offset}}{{/ifNotNull}}'
 mysqlBricks.select.defineClause(
     'offset',
-    '{{#ifNotNull _offset}}OFFSET {{_offset}}{{/ifNotNull}}',
+    offsetClauseFunction,
     { after: 'limit' }
 );
 
@@ -81,7 +94,12 @@ mysqlBricks.insert.prototype.ignore = function() {
     return this;
 };
 
-mysqlBricks.insert.defineClause('ignore', '{{#if _insertIgnore}}IGNORE{{/if}}', { after: 'insert' });
+const defineClauseFunction = function() {
+    return this._insertIgnore? "IGNORE": undefined
+}
+
+// '{{#if _insertIgnore}}IGNORE{{/if}}'
+mysqlBricks.insert.defineClause('ignore', defineClauseFunction, { after: 'insert' });
 
 
 
